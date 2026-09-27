@@ -1,0 +1,40 @@
+\ProvidesFile{themes/lamarr-classic/theme.tex}[2026/09/27 Lamarr classic poster theme]
+
+\usecolortheme{ox}
+\setbeamertemplate{background}{}
+
+\setbeamerfont{normal text}{size=\large}
+\setbeamerfont{block title}{size=\Large,series=\bfseries}
+\setbeamerfont{block body}{size=\large}
+\setbeamerfont{caption}{size=\normalsize}
+\setbeamerfont{headline author}{size=\Large}
+\setbeamerfont{headline institute}{size=\large}
+\setbeamerfont{itemize/enumerate body}{size=\large}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{footline}{size=\Large}
+
+\footercontent{%
+  \hbox to \dimexpr\paperwidth-2\sepwidth\relax{%
+    \hfill
+    \raisebox{-0.2\height}{\includegraphics[height=1.60cm]{logos/print-safe/tu-dortmund-logo-claim-de.png}}%
+    \hspace{0.85cm}%
+    \raisebox{-0.2\height}{\includegraphics[height=1.45cm]{logos/print-safe/fraunhofer-iais.png}}%
+    \hspace{0.60cm}%
+    \raisebox{-0.2\height}{\includegraphics[height=1.45cm]{logos/print-safe/fraunhofer-iml.png}}%
+    \hspace{0.70cm}%
+    \raisebox{-0.2\height}{\includegraphics[height=3.02cm]{logos/print-safe/uni_bonn-footer.png}}%
+    \hspace{0.95cm}%
+    \raisebox{-0.2\height}{\includegraphics[height=2.52cm]{logos/print-safe/NRWLogo-footer.png}}%
+    \hspace{1.00cm}%
+    \raisebox{-0.2\height}{\includegraphics[height=2.81cm]{logos/print-safe/BFTR-footer.png}}%
+    \hfill}}
+
+\logoright{\includegraphics[width=8cm]{logos/print-safe/lamarr-logo-negative-transparent.png}}
+\newcommand{\insertlogoleft}{%
+  \parbox{5.8cm}{%
+    \centering
+    \includegraphics[width=4.4cm]{gfx/paper_qr.pdf}\\[0.35em]
+    {\color{CrispWhite}\small Scan for paper}}}
+\setlength{\logoleftwidth}{5.8cm}
+\addtolength{\logoleftwidth}{10ex}
+\setlength{\maxlogowidth}{\maxof{\logoleftwidth}{\logorightwidth}}

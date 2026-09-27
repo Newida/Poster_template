@@ -1,0 +1,151 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{posterframework}[2026/09/27 Reusable themed poster framework]
+
+% ====================
+% Shared dependencies
+% ====================
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[
+  size=custom,
+  width=\PosterWidth,
+  height=\PosterHeight,
+  scale=\PosterScale
+]{beamerposter}
+\usetheme{gemini}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\RequirePackage{anyfontsize}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+% ====================
+% Semantic design tokens
+% ====================
+
+% Themes may redefine or alias these names. Poster content should use these
+% semantic tokens instead of theme-specific color names.
+\definecolor{CrispWhite}{HTML}{FFFFFF}
+\definecolor{DarkNavy}{HTML}{0C122B}
+\definecolor{Aqua}{HTML}{009EE3}
+\definecolor{SkyBlue}{HTML}{59BDF7}
+\definecolor{TakeawayAccent}{HTML}{FF0000}
+\definecolor{Fuchsia}{HTML}{E82E82}
+\definecolor{FreshViolet}{HTML}{983082}
+\definecolor{Caribbean}{HTML}{35CDB4}
+\definecolor{Sunshine}{HTML}{FFBC29}
+\definecolor{IndianRed}{HTML}{EC6469}
+\definecolor{Cornflower}{HTML}{4A4AD8}
+\definecolor{SoftGray}{HTML}{706F6F}
+
+% ====================
+% Shared geometry
+% ====================
+
+% For two columns: 3*sepwidth + 2*colwidth is just under paperwidth. The
+% small remainder prevents rounding-related overfull boxes in Beamer.
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.04\paperwidth}
+\setlength{\colwidth}{0.439\paperwidth}
+\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+
+% ====================
+% Shared poster components
+% ====================
+
+\newcommand{\heatmaptile}[2]{%
+  \begin{minipage}[t]{0.42\linewidth}
+    \centering
+    \begin{minipage}[c]{0.90\linewidth}
+      \includegraphics[width=\linewidth,trim=0.80cm 0.10cm 0.17cm 2.06cm,clip]{#1}
+    \end{minipage}%
+    \hspace{0.008\linewidth}%
+    \begin{minipage}[c]{0.07\linewidth}
+      \centering
+      \rotatebox[origin=c]{90}{\footnotesize\bfseries\strut #2}
+    \end{minipage}%
+  \end{minipage}%
+}
+
+\newcommand{\heatmaprow}[4]{%
+  \makebox[\linewidth][c]{%
+    \heatmaptile{#1}{#2}\hspace{0.025\linewidth}\heatmaptile{#3}{#4}%
+  }%
+}
+
+\newcommand{\comparepanel}[2]{%
+  \begin{minipage}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,trim=0.80cm 0.10cm 0.17cm 2.06cm,clip]{#1}\par
+    \vspace{0.2em}
+    {\small\bfseries #2}
+  \end{minipage}%
+}
+
+\newcommand{\highlightstat}[1]{{\color{Aqua}\bfseries #1}}
+\newcommand{\statcallout}[2]{%
+  \begin{minipage}[t]{0.31\linewidth}
+    \centering
+    {\Large\bfseries\color{TakeawayAccent} #1}\par
+    \vspace{0.15em}
+    {\normalsize #2}
+  \end{minipage}%
+}
+
+% These hooks let themes choose different visual treatments without changing
+% the scientific content file.
+\newcommand{\PosterFeatureBegin}[1]{\begin{alertblock}{#1}}
+\newcommand{\PosterFeatureEnd}{\end{alertblock}}
+\newcommand{\PosterTakeawaysBegin}[1]{\begin{alertblock}{#1}}
+\newcommand{\PosterTakeawaysEnd}{\end{alertblock}}
+\newcommand{\posteroptionalheading}[1]{}
+\newcommand{\PosterTitleBreakA}{\space}
+\newcommand{\PosterTitleBreakB}{\space}
+
+\newenvironment{posterfeatureblock}[1]
+  {\PosterFeatureBegin{#1}}
+  {\PosterFeatureEnd}
+\newenvironment{postertakeaways}[1]
+  {\PosterTakeawaysBegin{#1}}
+  {\PosterTakeawaysEnd}
+
+% ====================
+% Shared typography and spacing
+% ====================
+
+\setbeamerfont{normal text}{size=\large}
+\setbeamerfont{block title}{size=\Large,series=\bfseries}
+\setbeamerfont{block body}{size=\large}
+\setbeamerfont{caption}{size=\normalsize}
+\setbeamerfont{headline author}{size=\Large}
+\setbeamerfont{headline institute}{size=\large}
+\setbeamerfont{itemize/enumerate body}{size=\large}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{footline}{size=\Large}
+\setlength{\abovecaptionskip}{1ex}
+\setlength{\belowcaptionskip}{0.5ex}
+
+\makeatletter
+\def\@listi{\leftmargin\leftmarginii
+  \topsep 0.5ex
+  \parsep 0\p@ \@plus\p@
+  \itemsep 0.25ex}
+\makeatother
+
+% ====================
+% Theme loader
+% ====================
+
+\newcommand{\PosterLoadTheme}[1]{%
+  \edef\PosterThemeName{#1}%
+  \edef\PosterThemeFile{themes/\PosterThemeName/theme.tex}%
+  \InputIfFileExists{\PosterThemeFile}{}{%
+    \PackageError{posterframework}
+      {Poster theme `\PosterThemeName' was not found}
+      {Expected \PosterThemeFile.}%
+  }%
+}

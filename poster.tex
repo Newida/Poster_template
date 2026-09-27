@@ -1,160 +1,20 @@
-% Unofficial University of Oxford Poster Template
-% https://github.com/andiac/gemini-cam
-% a fork of https://github.com/anishathalye/gemini
+% Theme-independent poster content. Select a visual theme in
+% poster-config.tex or with `make THEME=<theme-name>`.
+\input{poster-config.tex}
 
 \documentclass[final]{beamer}
-
-% ====================
-% Colors
-% ====================
-
-\definecolor{CrispWhite}{HTML}{FFFFFF}
-\definecolor{DarkNavy}{HTML}{0C122B}
-
-\definecolor{Aqua}{HTML}{009ee3}
-\definecolor{SkyBlue}{HTML}{59bdf7}
-\definecolor{TakeawayAccent}{HTML}{FF0000}
-\definecolor{Fuchsia}{HTML}{e82e82}
-\definecolor{FreshViolet}{HTML}{983082}
-
-\definecolor{Caribbean}{HTML}{35cdb4}
-\definecolor{Sunshine}{HTML}{ffbc29}
-\definecolor{IndianRed}{HTML}{ec6469}
-\definecolor{Cornflower}{HTML}{4a4ad8}
-\definecolor{SoftGray}{HTML}{706f6f}
-
-% ====================
-% Packages
-% ====================
-
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-% Poster format: portrait, 61 cm x 85 cm.
-\usepackage[size=custom,width=61,height=85,scale=0.83]{beamerposter}
-\usetheme{gemini}
-\usecolortheme{ox}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usepackage{anyfontsize}
-\usetikzlibrary{arrows.meta,calc,positioning}
-
-% ====================
-% Lengths
-% ====================
-
-% If you have N columns, choose \sepwidth and \colwidth such that
-% (N+1)*\sepwidth + N*\colwidth = \paperwidth
-\newlength{\sepwidth}
-\newlength{\colwidth}
-% Two-column portrait layout.
-\setlength{\sepwidth}{0.04\paperwidth}
-\setlength{\colwidth}{0.439\paperwidth}
-
-\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
-\newcommand{\heatmaptile}[2]{%
-  \begin{minipage}[t]{0.42\linewidth}
-    \centering
-    \begin{minipage}[c]{0.90\linewidth}
-      \includegraphics[width=\linewidth, trim=0.80cm 0.10cm 0.17cm 2.06cm, clip]{#1}
-    \end{minipage}%
-    \hspace{0.008\linewidth}%
-    \begin{minipage}[c]{0.07\linewidth}
-      \centering
-      \rotatebox[origin=c]{90}{\footnotesize\bfseries\strut #2}
-    \end{minipage}%
-  \end{minipage}%
-}
-\newcommand{\heatmaprow}[4]{%
-  \makebox[\linewidth][c]{%
-    \heatmaptile{#1}{#2}\hspace{0.025\linewidth}\heatmaptile{#3}{#4}%
-  }%
-}
-\newcommand{\comparepanel}[2]{%
-  \begin{minipage}[t]{0.49\linewidth}
-    \centering
-    \includegraphics[width=\linewidth, trim=0.80cm 0.10cm 0.17cm 2.06cm, clip]{#1}\par
-    \vspace{0.2em}
-    {\small\bfseries #2}
-  \end{minipage}%
-}
-\newcommand{\highlightstat}[1]{{\color{Aqua}\bfseries #1}}
-\newcommand{\statcallout}[2]{%
-  \begin{minipage}[t]{0.31\linewidth}
-    \centering
-    {\Large\bfseries\color{TakeawayAccent} #1}\par
-    \vspace{0.15em}
-    {\normalsize #2}
-  \end{minipage}%
-}
-
-\setbeamerfont{normal text}{size=\large}
-\setbeamerfont{block title}{size=\Large,series=\bfseries}
-\setbeamerfont{block body}{size=\large}
-\setbeamerfont{caption}{size=\normalsize}
-\setbeamerfont{headline author}{size=\Large}
-\setbeamerfont{headline institute}{size=\large}
-\setbeamerfont{itemize/enumerate body}{size=\large}
-\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
-\setbeamerfont{footline}{size=\Large}
-\setlength{\abovecaptionskip}{1ex}
-\setlength{\belowcaptionskip}{0.5ex}
-
-\makeatletter
-\def\@listi{\leftmargin\leftmarginii
-\topsep 0.5ex
-\parsep 0\p@ \@plus\p@
-\itemsep 0.25ex}
-\makeatother
+\usepackage{posterframework}
+\PosterLoadTheme{\PosterTheme}
 
 % ====================
 % Title
 % ====================
 
-\title{Towards Foundation Models for Quantum Unitary Synthesis via Zero-Shot MDL}
+\title{Towards Foundation Models for\PosterTitleBreakA Quantum Unitary Synthesis\PosterTitleBreakB via Zero-Shot MDL}
 
 \author{Lukas Theißinger \inst{1,3} \and Thore Gerlach \inst{2} \and David Berghaus \inst{1,4} \and Christian Bauckhage \inst{1,3,4}}
 
 \institute[shortinst]{\inst{1} Lamarr Institute \samelineand \inst{2} European Space Agency \samelineand \inst{3} University of Bonn \samelineand \inst{4} Fraunhofer IAIS}
-
-% ====================
-% Footer (optional)
-% ====================
-
-\footercontent{
-  \hbox to \dimexpr\paperwidth-2\sepwidth\relax{%
-    \hfill
-    \raisebox{-0.2\height}{\includegraphics[height=1.60cm]{logos/print-safe/tu-dortmund-logo-claim-de.png}}%
-    \hspace{0.85cm}%
-    \raisebox{-0.2\height}{\includegraphics[height=1.45cm]{logos/print-safe/fraunhofer-iais.png}}%
-    \hspace{0.60cm}%
-    \raisebox{-0.2\height}{\includegraphics[height=1.45cm]{logos/print-safe/fraunhofer-iml.png}}%
-    \hspace{0.70cm}%
-    \raisebox{-0.2\height}{\includegraphics[height=3.02cm]{logos/print-safe/uni_bonn-footer.png}}%
-    \hspace{0.95cm}%
-    \raisebox{-0.2\height}{\includegraphics[height=2.52cm]{logos/print-safe/NRWLogo-footer.png}}%
-    \hspace{1.00cm}%
-    \raisebox{-0.2\height}{\includegraphics[height=2.81cm]{logos/print-safe/BFTR-footer.png}}%
-    \hfill}}
-% (can be left out to remove footer)
-
-% ====================
-% Logo (optional)
-% ====================
-% Refer to https://github.com/k4rtik/uchicago-poster
-% logo: https://communications.admin.ox.ac.uk/communications-resources/visual-identity/identity-guidelines/the-oxford-logo
-% use this to include logos on the left and/or right side of the header:
-\logoright{\includegraphics[width=8cm]{logos/print-safe/lamarr-logo-negative-transparent.png}}
-\newcommand{\insertlogoleft}{%
-  \parbox{5.8cm}{%
-    \centering
-    \includegraphics[width=4.4cm]{gfx/paper_qr.pdf}\\[0.35em]
-    {\color{CrispWhite}\small Scan for paper}}}
-\setlength{\logoleftwidth}{5.8cm}
-\addtolength{\logoleftwidth}{10ex}
-\setlength{\maxlogowidth}{\maxof{\logoleftwidth}{\logorightwidth}}
 
 % ====================
 % Body
@@ -247,7 +107,7 @@
 
   \end{block}
 
-  \begin{alertblock}{Minimum description length (MDL)}
+  \begin{posterfeatureblock}{Minimum description length (MDL)}
 	  	\begin{itemize}
 	  		\item \textbf{MDL principle:} Prefer the shortest exact explanation
 			\item \textbf{For synthesis:} MDL is the remaining gate count of the shortest exact circuit
@@ -255,7 +115,7 @@
 			\item \textbf{Challenge:} Exact MDL is NP-hard, so we learn a predictor instead
 	  	\end{itemize}
 	   
-  \end{alertblock}
+  \end{posterfeatureblock}
   
   \begin{block}{Training MDL Predictor}
 	  	\begin{itemize}
@@ -299,6 +159,7 @@
 \separatorcolumn
 
 \begin{column}{\colwidth}
+		\posteroptionalheading{Beam search view}
 		
 		\begin{figure}
 			\centering
@@ -307,7 +168,7 @@
 		\end{figure}
 		
 	
-		\begin{alertblock}{Takeaways}
+		\begin{postertakeaways}{Takeaways}
 			\normalsize
 			\textbf{A simple and reusable, {\color{TakeawayAccent}zero-shot} MDL-guided search heuristic for quantum unitary synthesis that is cheap to train and fast at inference}
 			\vspace{0.5em}
@@ -318,7 +179,7 @@
 			\statcallout{22 s}{average runtime per 5-qubit instance at test time}
 			\hfill
 			\statcallout{15/15}{successes in almost every QAS-Bench bucket}
-			\end{alertblock}
+			\end{postertakeaways}
 
 				\begin{block}{Results}
 					{\normalsize \textbf{QAS-Bench} standardized Benchmark. Testing on 2--5 qubits, difficulty levels 1--6 with 15 targets per bucket.

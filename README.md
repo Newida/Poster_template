@@ -1,72 +1,65 @@
-# Gemini Unofficial Oxford Version [![Build Status](https://github.com/anishathalye/gemini/workflows/CI/badge.svg)](https://github.com/anishathalye/gemini/actions?query=workflow%3ACI)
+# Themed LaTeX poster template
 
-This is an unofficial adaptation of the modern LaTeX [beamerposter] theme, Gemini, tailored for the University of Oxford.
+A reusable two-column `beamerposter` template with one content source and
+swappable visual themes. The repository currently includes:
 
-<p align="center">
-<a href="https://raw.githubusercontent.com/anishathalye/assets/master/gemini/poster-gemini.pdf">
-<img src="https://raw.githubusercontent.com/MaxMLang/assets/master/ox-poster.png">
-</a>
-</p>
+- `lamarr-classic` — the original dark-blue Lamarr layout
+- `japanese-garden` — an ivory sumi-e layout adapted from
+  `themes/Japanese_Garden.png`
 
-For a general-purpose beamer presentation theme, see [Auriga].
+Both themes use print-safe, opaque logo assets so PDF renderers and print shops
+do not substitute black boxes for transparent artwork.
 
-## Oxford Customizations
+## Build
 
-* Integrated University of Oxford branding guidelines
-* Example templates featuring the Oxford color scheme and logo placement
-* Additional font support to match Oxford's branding (where applicable)
+Install a reasonably complete TeX Live distribution with `pdflatex`,
+`latexmk`, `beamerposter`, TikZ/PGFPlots, Latin Modern, and TeX Gyre fonts.
+Then run:
 
-## Dependencies
+```bash
+make                              # classic theme and poster.pdf
+make THEME=japanese-garden theme  # Japanese theme only
+make themes                       # every bundled theme
+make clean
+```
 
-* A TeX installation that includes [LuaTeX]
-    * `latexmk` is needed for using the provided `Makefile`
-* LaTeX package dependencies including beamerposter (typically part of your TeX installation, available on [CTAN] if not)
-* [Raleway] and [Lato] fonts, both available under Open Font License, and any additional fonts recommended by the University's branding guidelines
+Named PDFs are written to `output/pdf/`:
 
-## Usage
+```text
+output/pdf/poster-lamarr-classic.pdf
+output/pdf/poster-japanese-garden.pdf
+```
 
-1. Copy or clone the files from this repository
+The default theme and poster dimensions are set in `poster-config.tex`. A
+Makefile `THEME=...` argument overrides the configured default for that build.
 
-1. Configure `poster.tex` with your desired paper size, column layout, and scale adjustments as needed
+## Project structure
 
-1. Customize `beamercolorthemegemini.sty` by copying it and modifying the `\usecolortheme` line in `poster.tex` to theme your poster to Oxford's branding (optional but recommended for university-related presentations)
+```text
+poster.tex                 scientific content and title metadata
+posterframework.sty        shared packages, geometry, and semantic components
+poster-config.tex          default theme, page size, and scale
+themes/<name>/theme.tex    colors, typography, background, header, and footer
+themes/<name>/assets/      theme-specific artwork
+logos/print-safe/          logos composited for the dark classic theme
+logos/print-safe-light/    logos composited for light themes
+```
 
-1. Use `make` to compile your poster
+Content in `poster.tex` uses semantic colors and components supplied by the
+framework, rather than styling individual themes directly. See
+[`themes/README.md`](themes/README.md) for the theme contract and instructions
+for adding another theme.
 
-## FAQ
+## Editing the poster
 
-For common questions, such as adding an institution logo or customizing the color theme further, consult the [FAQ] in the Wiki.
+- Change the scientific content, figures, title, authors, and affiliations in
+  `poster.tex`.
+- Change the default theme or physical dimensions in `poster-config.tex`.
+- Change only visual design in the selected theme's `theme.tex`.
+- Keep raster background artwork at print resolution; the Japanese theme uses
+  `background-print.jpg` for the PDF and keeps the smaller PNG as its editable
+  source asset.
 
-## Themes
-
-The Oxford version includes several color themes suitable for various types of presentations:
-
-* `gemini` (default)
-* `ox` (customized for University of Oxford branding)
-* `mit`
-* `labsix`
-
-You're encouraged to create your own color theme or use the `ox` theme for presentations associated with the University.
-
-## Design Goals
-
-* **Minimal**: Focuses on readability and simplicity.
-* **Batteries Included**: Ready to use with minimal setup.
-* **Easy Theming**: Simplified process to create or modify themes.
-
-## Contributing
-
-Contributions such as bug reports, new themes, and enhancements are welcome! Design is subjective, so early feedback through issues or pull requests is encouraged.
-
-## License
-
-Copyright (c) 2018-2022 Anish Athalye. This unofficial Oxford version is released under the MIT License. See [LICENSE.md][license] for details.
-
-[beamerposter]: https://github.com/deselaers/latex-beamerposter
-[Auriga]: https://github.com/anishathalye/auriga
-[LuaTeX]: http://www.luatex.org/
-[CTAN]: https://ctan.org/
-[Raleway]: https://www.fontsquirrel.com/fonts/raleway
-[Lato]: https://www.fontsquirrel.com/fonts/lato
-[license]: LICENSE.md
-[FAQ]: https://github.com/anishathalye/gemini/wiki/FAQ
+This project is based on the open-source
+[Gemini](https://github.com/anishathalye/gemini) Beamer poster theme. Licensing
+details are in [`LICENSE.md`](LICENSE.md).
