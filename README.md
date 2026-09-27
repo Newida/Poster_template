@@ -6,8 +6,9 @@ swappable visual themes. The repository currently includes:
 - `lamarr-classic` — the original dark-blue Lamarr layout
 - `japanese-garden` — an ivory sumi-e layout adapted from
   `themes/Japanese_Garden.png`
+- `space` — a midnight cosmic layout adapted from `themes/Space.png`
 
-Both themes use print-safe, opaque logo assets so PDF renderers and print shops
+All themes use print-safe, opaque logo assets so PDF renderers and print shops
 do not substitute black boxes for transparent artwork.
 
 ## Build
@@ -19,6 +20,7 @@ Then run:
 ```bash
 make                              # classic theme and poster.pdf
 make THEME=japanese-garden theme  # Japanese theme only
+make THEME=space theme            # space theme only
 make themes                       # every bundled theme
 make clean
 ```
@@ -28,6 +30,7 @@ Named PDFs are written to `output/pdf/`:
 ```text
 output/pdf/poster-lamarr-classic.pdf
 output/pdf/poster-japanese-garden.pdf
+output/pdf/poster-space.pdf
 ```
 
 The default theme and poster dimensions are set in `poster-config.tex`. A

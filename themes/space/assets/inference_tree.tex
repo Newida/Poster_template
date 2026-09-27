@@ -1,0 +1,71 @@
+\documentclass[tikz]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+\definecolor{SpaceInk}{HTML}{031426}
+\definecolor{SpacePanel}{HTML}{061C31}
+\definecolor{SpaceCream}{HTML}{F4EBD8}
+\definecolor{SpaceCyan}{HTML}{73E5FF}
+\definecolor{SkyBlue}{HTML}{59BDF7}
+\definecolor{Caribbean}{HTML}{35CDB4}
+\definecolor{Sunshine}{HTML}{FFBC29}
+\definecolor{IndianRed}{HTML}{EC6469}
+\definecolor{Cornflower}{HTML}{4A4AD8}
+
+\newcommand{\mlpnode}[3][SpaceCream]{%
+  \tikz[baseline=(base.base),x=1.1mm,y=1.0mm,line width=0.25pt,>=Latex]{
+    \node[inner sep=0,outer sep=0] (base) at (0,0) {};
+    \node[font=\scriptsize,text=#1,anchor=east] at (-6,0) {#2};
+    \node[font=\scriptsize,text=#1,anchor=west] at (5,0) {#3};
+    \draw[-Latex,#1] (-6.2,0) -- (-4.2,0);
+    \draw[-Latex,#1] (4.2,0) -- (6.2,0);
+    \foreach \y in {-1,1} {
+      \filldraw[fill=Cornflower,draw=#1] (-2.7,\y) circle (0.5);
+    }
+    \foreach \y in {-2,0,2} {
+      \filldraw[fill=Sunshine,draw=#1] (0,\y) circle (0.5);
+    }
+    \filldraw[fill=Caribbean,draw=#1] (2.7,0) circle (0.5);
+    \foreach \yin in {-1,1} {
+      \foreach \yhid in {-2,0,2} {
+        \draw[#1] (-2.7,\yin) -- (0,\yhid);
+      }
+    }
+    \foreach \yhid in {-2,0,2} {
+      \draw[#1] (0,\yhid) -- (2.7,0);
+    }
+  }%
+}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=2.8cm,
+  y=1.8cm,
+  >=Latex,
+  node/.style={rectangle,rounded corners=1.5pt,draw=SpaceCream,fill=SpacePanel,
+    minimum width=6mm,minimum height=5mm,inner sep=2pt,font=\small},
+  best/.style={node,fill=SkyBlue,draw=SpaceCyan,thick},
+  pruned/.style={node,draw=IndianRed,text=SpaceCream,fill=IndianRed,
+    fill opacity=0.22,text opacity=1,draw opacity=1},
+  edge/.style={-Latex,draw=SpaceCream,thick},
+  pruned edge/.style={-Latex,draw=IndianRed,dashed},
+  edge label/.style={font=\scriptsize,text=SpaceCream,fill=SpacePanel,
+    inner sep=1pt,sloped}
+]
+  \node[node] (s) at (0,0) {\mlpnode{()}{3}};
+
+  \node[best] (a) at (0.7,0.9) {\mlpnode[SpaceInk]{(T)}{4}};
+  \node[best] (b) at (0.7,-0.9) {\mlpnode[SpaceInk]{(CX)}{2}};
+  \node[pruned] (d) at (2,1.5) {\mlpnode{(TT)}{5}};
+  \node[pruned] (e) at (2,0.3) {\mlpnode{(TCX)}{5}};
+  \node[best] (f) at (2,-0.3) {\mlpnode[SpaceInk]{(CXT)}{1}};
+  \node[best] (g) at (2,-1.5) {\mlpnode[SpaceInk]{(CXCX)}{3}};
+  \draw[edge] (s) -- node[edge label,midway,above=2pt] {+T} (a);
+  \draw[edge] (s) -- node[edge label,pos=0.46,below=1.4pt] {+CX} (b);
+  \draw[pruned edge] (a) -- node[edge label,midway,above=2pt] {+T} (d);
+  \draw[pruned edge] (a) -- node[edge label,midway,below=2pt] {+CX} (e);
+  \draw[edge] (b) -- node[edge label,midway,above=2pt] {+T} (f);
+  \draw[edge] (b) -- node[edge label,pos=0.42,below=1.4pt] {+CX} (g);
+\end{tikzpicture}
+\end{document}

@@ -87,6 +87,7 @@
 }
 
 \newcommand{\highlightstat}[1]{{\color{Aqua}\bfseries #1}}
+\newcommand{\PosterInferenceTree}{gfx/inference_tree.pdf}
 \newcommand{\statcallout}[2]{%
   \begin{minipage}[t]{0.31\linewidth}
     \centering
@@ -103,6 +104,8 @@
 \newcommand{\PosterTakeawaysBegin}[1]{\begin{alertblock}{#1}}
 \newcommand{\PosterTakeawaysEnd}{\end{alertblock}}
 \newcommand{\posteroptionalheading}[1]{}
+\newcommand{\PosterFigureBegin}[1]{\posteroptionalheading{#1}}
+\newcommand{\PosterFigureEnd}{}
 \newcommand{\PosterTitleBreakA}{\space}
 \newcommand{\PosterTitleBreakB}{\space}
 
@@ -112,6 +115,9 @@
 \newenvironment{postertakeaways}[1]
   {\PosterTakeawaysBegin{#1}}
   {\PosterTakeawaysEnd}
+\newenvironment{posterfigureblock}[1]
+  {\PosterFigureBegin{#1}}
+  {\PosterFigureEnd}
 
 % ====================
 % Shared typography and spacing

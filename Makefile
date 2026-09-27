@@ -1,9 +1,14 @@
 THEME ?= lamarr-classic
-AVAILABLE_THEMES := lamarr-classic japanese-garden
+AVAILABLE_THEMES := lamarr-classic japanese-garden space
 THEME_TARGETS := $(addprefix build-theme-,$(AVAILABLE_THEMES))
 BUILD_DIR := build/$(THEME)
 OUTPUT_DIR := output/pdf
 THEME_PDF := $(OUTPUT_DIR)/poster-$(THEME).pdf
+THEME_ASSETS :=
+
+ifeq ($(THEME),space)
+THEME_ASSETS += themes/space/assets/inference_tree.pdf
+endif
 
 .PHONY: main theme themes clean FORCE $(THEME_TARGETS)
 
@@ -19,7 +24,7 @@ themes: $(THEME_TARGETS)
 $(THEME_TARGETS):
 	$(MAKE) THEME=$(@:build-theme-%=%) theme
 
-$(THEME_PDF): FORCE
+$(THEME_PDF): $(THEME_ASSETS) FORCE
 	test -f 'themes/$(THEME)/theme.tex'
 	mkdir -p '$(BUILD_DIR)' '$(OUTPUT_DIR)'
 	latexmk -g -pdf \
@@ -29,6 +34,14 @@ $(THEME_PDF): FORCE
 		-pdflatex='pdflatex -interaction=nonstopmode -halt-on-error %O %P %S' \
 		poster.tex
 	cp '$(BUILD_DIR)/poster-$(THEME).pdf' '$@'
+
+themes/space/assets/inference_tree.pdf: themes/space/assets/inference_tree.tex
+	mkdir -p 'themes/space/assets'
+	latexmk -pdf \
+		-outdir='themes/space/assets' \
+		-pdflatex='pdflatex -interaction=nonstopmode -halt-on-error %O %S' \
+		'$<'
+	latexmk -c -outdir='themes/space/assets' '$<'
 
 clean:
 	find build -depth -delete 2>/dev/null || true
