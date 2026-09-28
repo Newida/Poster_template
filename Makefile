@@ -5,6 +5,11 @@ BUILD_DIR := build/$(THEME)
 OUTPUT_DIR := output/pdf
 THEME_PDF := $(OUTPUT_DIR)/poster-$(THEME).pdf
 THEME_ASSETS :=
+GARDEN_LOGOS := $(addprefix themes/japanese-garden/assets/logos/,lamarr.pdf tu-dortmund.pdf fraunhofer-iais.pdf fraunhofer-iml.pdf uni-bonn.pdf nrw.pdf bftr.pdf)
+
+ifeq ($(THEME),japanese-garden)
+THEME_ASSETS += $(GARDEN_LOGOS)
+endif
 
 ifeq ($(THEME),space)
 THEME_ASSETS += themes/space/assets/inference_tree.pdf
@@ -34,6 +39,9 @@ $(THEME_PDF): $(THEME_ASSETS) FORCE
 		-pdflatex='pdflatex -interaction=nonstopmode -halt-on-error %O %P %S' \
 		poster.tex
 	cp '$(BUILD_DIR)/poster-$(THEME).pdf' '$@'
+
+$(GARDEN_LOGOS) &: scripts/build_garden_logos.py $(wildcard logos/*.png logos/*.svg logos/print-safe-light/*.png)
+	python3 scripts/build_garden_logos.py
 
 themes/space/assets/inference_tree.pdf: themes/space/assets/inference_tree.tex
 	mkdir -p 'themes/space/assets'
